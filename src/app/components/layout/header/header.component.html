@@ -1,0 +1,16 @@
+<mat-toolbar class="primary-toolbar">
+  <mat-toolbar-row>
+    <button
+      mat-icon-button
+      *ngIf="isMobile"
+      (click)="openSidenav()"
+      class="primary-button toggle-button"
+      aria-label="icon-button with menu icon">
+      <mat-icon svgIcon="menu"></mat-icon>
+    </button>
+    <mat-icon svgIcon="rocket" class="logo-icon" aria-hidden="false" aria-label="rocket icon"></mat-icon>
+    <span>StarWars</span>
+    <span class="spacer"></span>
+    <app-desktop-menu *ngIf="!isMobile" />
+  </mat-toolbar-row>
+</mat-toolbar>

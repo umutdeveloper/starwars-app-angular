@@ -1,0 +1,11 @@
+<mat-nav-list>
+  @for (item of menuItems; track item.to) {
+  <a
+    mat-list-item
+    (click)="onClick.emit()"
+    [routerLink]="item.to"
+    [class.active]="(currentPath$ | async) === item.to"
+    >{{ item.text }}</a
+  >
+  }
+</mat-nav-list>

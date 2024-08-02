@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { createSelector, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ const selectPageItemResults = createSelector(rootSelector, films.feature.selectP
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   films$: Observable<Film[]>;

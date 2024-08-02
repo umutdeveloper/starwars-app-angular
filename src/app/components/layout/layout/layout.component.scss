@@ -1,0 +1,13 @@
+mat-drawer-container {
+  height: 100%;
+}
+
+mat-drawer {
+  --mat-sidenav-container-width: max-content;
+  background: #fff;
+  border-radius: 0;
+}
+
+mat-drawer-content {
+    margin: 0 !important;
+}

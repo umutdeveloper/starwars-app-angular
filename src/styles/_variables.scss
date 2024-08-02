@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+$primary-palette: mat.$azure-palette;
+
+$theme: mat.define-theme(
+  (
+    color: (
+      primary: $primary-palette,
+    ),
+  )
+);

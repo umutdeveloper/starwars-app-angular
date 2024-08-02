@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+@use '../../../../styles/variables' as variables;
+
+.primary-toolbar {
+  color: mat.get-theme-color(variables.$theme, primary, 100);
+  background-color: mat.get-theme-color(variables.$theme, primary);
+}
+
+.primary-button {
+  color: mat.get-theme-color(variables.$theme, primary, 100);
+  background-color: mat.get-theme-color(variables.$theme, primary);
+
+  &:hover {
+    background-color: mat.get-theme-color(variables.$theme, primary, 35);
+  }
+}
+
+.toggle-button {
+  margin-inline-end: 10px;
+}
+
+.logo-icon {
+  padding-inline-end: 10px;
+}
+.spacer {
+  flex: 1 1 auto;
+}

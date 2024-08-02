@@ -1,0 +1,11 @@
+mat-nav-list {
+  padding: 0 !important;
+}
+
+a {
+  border-radius: 0 !important;
+  &.active::before {
+    background-color: var(--mdc-list-list-item-hover-state-layer-color);
+    opacity: 0.18;
+  }
+}

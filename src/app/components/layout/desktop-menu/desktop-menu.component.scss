@@ -1,0 +1,21 @@
+@use '@angular/material' as mat;
+@use '../../../../styles/variables' as variables;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+a {
+  color: mat.get-theme-color(variables.$theme, primary, 100) !important;
+  background-color: mat.get-theme-color(variables.$theme, primary);
+
+  &.active {
+    background-color: mat.get-theme-color(variables.$theme, primary, 30);
+  }
+  &:hover {
+    background-color: mat.get-theme-color(variables.$theme, primary, 35);
+  }
+}
