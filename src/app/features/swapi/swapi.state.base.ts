@@ -4,7 +4,7 @@ import { APIStatus, JSONResponse } from '../../models/types';
 import { createReducer, on, createFeature, createSelector } from '@ngrx/store';
 import { mapToState } from './mappers/list.mapper';
 import { createListPageActionsFor } from './swapi.actions.base';
-import { fetchItemEffect, fetchItemsEffect, fetchListEffect } from './swapi.effects.base';
+import { fetchItemEffect, fetchItemsEffect, fetchListEffect, requestItemsEffect } from './swapi.effects.base';
 
 export const createInitialStateFor = <T extends Base>(adapter: EntityAdapter<T>) =>
   adapter.getInitialState({
@@ -26,23 +26,25 @@ export const createInitialStateFor = <T extends Base>(adapter: EntityAdapter<T>)
 const statusHandler =
   <K extends Base>(type: 'status' | 'itemStatus', status: APIStatus, err?: string) =>
   (state: SwapiState<K>) => {
-    state[type] = status;
+    const newState = { ...state };
+    newState[type] = status;
     if (err) {
-      state.error = err || 'Failed to fetch data';
+      newState.error = err || 'Failed to fetch data';
     }
-    return { ...state };
+    return newState;
   };
 
 const withErrorHandler = <T extends Base>(state: SwapiState<T>, actionHandler: () => SwapiState<T>) => {
   try {
     return actionHandler();
   } catch (err: unknown) {
+    const newState = { ...state };
     if (err instanceof Error) {
-      state.error = `JSON Format Error: ${err.message}`;
+      newState.error = `JSON Format Error: ${err.message}`;
     } else {
-      state.error = `Unexpected Error: ${err}`;
+      newState.error = `Unexpected Error: ${err}`;
     }
-    return { ...state };
+    return newState;
   }
 };
 
@@ -56,28 +58,32 @@ const createReducerFor = <T extends Base>(
   const reducer = createReducer(
     initialState,
     on(listActions.nextPage, state => {
+      const newState = { ...state };
       if (state.hasNext && state.status !== 'loading') {
-        state.pagination = { ...state.pagination, page: state.pagination.page + 1 };
+        newState.pagination = { ...state.pagination, page: state.pagination.page + 1 };
       }
-      return { ...state };
+      return newState;
     }),
     on(listActions.prevPage, state => {
+      const newState = { ...state };
       if (state.hasPrev && state.status !== 'loading') {
-        state.pagination = { ...state.pagination, page: state.pagination.page - 1 };
+        newState.pagination = { ...state.pagination, page: state.pagination.page - 1 };
       }
-      return { ...state };
+      return newState;
     }),
     on(listActions.search, (state, { search }) => {
+      const newState = { ...state };
       if (state.status !== 'loading') {
-        state.pagination = { ...state.pagination, page: 1, search };
+        newState.pagination = { ...state.pagination, page: 1, search };
       }
-      return { ...state };
+      return newState;
     }),
     on(listActions.requestItem, (state, { id }) => {
+      const newState = { ...state };
       if (!state.requestedList.includes(id) && !state.entities[id]) {
-        state.requestedList.push(id);
+        newState.requestedList = [...state.requestedList, id];
       }
-      return { ...state };
+      return newState;
     }),
     on(listActions.reset, state => {
       return {
@@ -98,7 +104,7 @@ const createReducerFor = <T extends Base>(
         itemStatus: initialState.itemStatus,
       };
     }),
-    on(listActions.fetchListPending, statusHandler('status', 'loading')),
+    on(listActions.fetchListPending, statusHandler<T>('status', 'loading')),
     on(listActions.fetchItemPending, statusHandler('itemStatus', 'loading')),
     on(listActions.fetchItemsPending, statusHandler('itemStatus', 'loading')),
     on(listActions.fetchListFulfilled, (state, { response }) => {
@@ -117,31 +123,33 @@ const createReducerFor = <T extends Base>(
     }),
     on(listActions.fetchItemFulfilled, (state, { response }) => {
       return withErrorHandler(state, () => {
+        const newState = { ...state };
         const { id, item } = resultMapper(response);
-        state.error = null;
-        state.itemStatus = 'succeeded';
-        const index = state.requestedList.indexOf(id);
+        newState.error = null;
+        newState.itemStatus = 'succeeded';
+        const index = newState.requestedList.indexOf(id);
         if (index !== -1) {
-          state.requestedList.splice(index, 1);
+          newState.requestedList = newState.requestedList.filter(reqId => reqId !== id);
         }
-        return { ...adapter.setOne(item, state) };
+        return { ...adapter.setOne(item, newState) };
       });
     }),
     on(listActions.fetchItemsFulfilled, (state, { response }) => {
       return withErrorHandler(state, () => {
+        const newState = { ...state };
         const list = response;
         const items: T[] = [];
         list.forEach(itemResponse => {
           const { id, item } = resultMapper(itemResponse);
           items.push(item);
-          const index = state.requestedList.indexOf(id);
+          const index = newState.requestedList.indexOf(id);
           if (index !== -1) {
-            state.requestedList.splice(index, 1);
+            newState.requestedList = newState.requestedList.filter(reqId => reqId !== id);
           }
         });
-        state.error = null;
-        state.itemStatus = 'succeeded';
-        return { ...adapter.setMany(items, state) };
+        newState.error = null;
+        newState.itemStatus = 'succeeded';
+        return { ...adapter.setMany(items, newState) };
       });
     }),
     on(listActions.fetchListRejected, (state, { error }) => statusHandler<T>('status', 'failed', error.message)(state)),
@@ -153,13 +161,7 @@ const createReducerFor = <T extends Base>(
     )
   );
 
-  const effects = {
-    [`swapi${apiPath}listEffect`]: fetchListEffect(listActions, apiPath),
-    [`swapi${apiPath}itemEffect`]: fetchItemEffect(listActions, apiPath),
-    [`swapi${apiPath}itemsEffect`]: fetchItemsEffect(listActions, apiPath),
-  };
-
-  return { reducer, actions: listActions, effects };
+  return { reducer, actions: listActions };
 };
 
 export const createFeatureFor = <T extends Base>(
@@ -168,7 +170,7 @@ export const createFeatureFor = <T extends Base>(
 ) => {
   const adapter = createEntityAdapter<T>();
   const initialState: SwapiState<T> = createInitialStateFor(adapter);
-  const { reducer, actions, effects } = createReducerFor(initialState, apiPath, resultMapper, adapter);
+  const { reducer, actions } = createReducerFor(initialState, apiPath, resultMapper, adapter);
   const feature = createFeature({
     name: apiPath,
     reducer,
@@ -180,5 +182,12 @@ export const createFeatureFor = <T extends Base>(
       ),
     }),
   });
+
+  const effects = {
+    [`swapi${apiPath}listEffect`]: fetchListEffect(actions, apiPath),
+    [`swapi${apiPath}itemEffect`]: fetchItemEffect(actions, apiPath),
+    [`swapi${apiPath}itemsEffect`]: fetchItemsEffect(actions, apiPath),
+    [`swapi${apiPath}requestItemsEffect`]: requestItemsEffect(actions, apiPath),
+  };
   return { feature, reducer, actions, effects };
 };

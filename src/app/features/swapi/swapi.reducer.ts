@@ -11,6 +11,7 @@ const swapiReducer = combineReducers({
 });
 
 export const name = 'swapi';
-export const rootSelector = createFeatureSelector<ReturnType<typeof swapiReducer>>(name);
+export type SwapiStore = ReturnType<typeof swapiReducer>;
+export const rootSelector = createFeatureSelector<SwapiStore>(name);
 
 export default swapiReducer;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { SwapiListJSONResponse } from './models/base';
 import { environment } from '../../../environments/environment';
 import { JSONResponse } from '../../models/types';
@@ -22,6 +22,6 @@ export class SwapiService {
   }
 
   fetchItems(apiPath: string, ids: number[]): Observable<JSONResponse[]> {
-    return combineLatest(ids.map(id => this.fetchItem(apiPath, id)));
+    return zip(ids.map(id => this.fetchItem(apiPath, id)));
   }
 }

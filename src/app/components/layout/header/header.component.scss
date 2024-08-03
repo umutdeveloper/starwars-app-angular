@@ -1,6 +1,12 @@
 @use '@angular/material' as mat;
 @use '../../../../styles/variables' as variables;
 
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 .primary-toolbar {
   color: mat.get-theme-color(variables.$theme, primary, 100);
   background-color: mat.get-theme-color(variables.$theme, primary);

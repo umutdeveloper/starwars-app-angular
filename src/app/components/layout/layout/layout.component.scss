@@ -9,5 +9,26 @@ mat-drawer {
 }
 
 mat-drawer-content {
-    margin: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-wrapper {
+  overflow: auto;
+  flex: 1;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 1200px) {
+    max-width: 1140px;
+  }
 }

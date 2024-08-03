@@ -1,1 +1,23 @@
-<p>films works!</p>
+<div class="row">
+    @if (films$ | async; as films) {
+        @for (film of films; track film.id) { 
+            <div class="col">
+                @defer (on viewport) {
+                    <app-film [film]="film" />
+                } @placeholder {
+                    <app-film-card-placeholder />
+                }
+            </div>
+        }
+    }
+    @if (isPendingWithNoItems$ | async) {
+        @for (item of [1,2,3]; track item) {
+            <div class="col">
+                <app-film-card-placeholder />
+            </div>
+        }
+    }
+    @if (isNotFound$ | async) {
+        <h5>No Items Found</h5>
+    }
+</div>

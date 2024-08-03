@@ -1,0 +1,21 @@
+<mat-card *ngIf="film !== undefined">
+  <mat-card-header>
+    <mat-card-title>{{ film.title }}</mat-card-title>
+    <mat-card-subtitle>Episode {{ film.episodeId }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ film.openingCrawl }}</p>
+    <p><strong>Director:</strong> {{ film.director }}</p>
+    <p><strong>Producer:</strong> {{ film.producer }}</p>
+    <p><strong>Release Date:</strong> {{ film.releaseDate | date }}</p>
+    <div class="people-names">
+      <strong>People:</strong>
+      <ng-container *ngIf="peopleNames; else loading">
+        {{ peopleNames }}
+      </ng-container>
+      <ng-template #loading>
+        <mat-progress-spinner mode="indeterminate" diameter="22"></mat-progress-spinner>
+      </ng-template>
+    </div>
+  </mat-card-content>
+</mat-card>
