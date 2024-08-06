@@ -36,6 +36,10 @@ export const routes: Routes = [
         path: PageRoutes.Vehicles,
         loadComponent: () => import('./pages/vehicles/vehicles.component').then(c => c.VehiclesComponent),
       },
+      {
+        path: PageRoutes.Error,
+        loadComponent: () => import('./templates/error/error.component').then(c => c.ErrorComponent),
+      },
     ],
   },
 ];

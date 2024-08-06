@@ -5,4 +5,5 @@ export enum Routes {
   Species = 'species',
   Starships = 'starships',
   Vehicles = 'vehicles',
+  Error = 'error',
 }

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, Input, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { FeatureDetails } from '../../features/swapi/swapi.state';
 import { Base } from '../../features/swapi/models/base';
 import { createSelector, Store } from '@ngrx/store';
-import { map, Observable, shareReplay, tap } from 'rxjs';
+import { filter, map, Observable, shareReplay, take, tap } from 'rxjs';
 import { rootSelector } from '../../features/swapi/swapi.reducer';
 
 @Component({
@@ -79,6 +79,7 @@ export class SwapiListComponent<T extends Base> implements OnInit {
       });
       const selectHasPrev = createSelector(rootSelector, this.featureDetails.feature.selectHasPrev);
       const selectHasNext = createSelector(rootSelector, this.featureDetails.feature.selectHasNext);
+      const selectError = createSelector(rootSelector, this.featureDetails.feature.selectError);
       this.isPending$ = this.store.select(selectIsPending);
       this.isPendingForNoItems$ = this.store.select(selectIsPendingForNoItems);
       this.isNotFound$ = this.store.select(selectIsNotFound);
@@ -100,8 +101,15 @@ export class SwapiListComponent<T extends Base> implements OnInit {
       );
       this.hasPrev$ = this.store.select(selectHasPrev);
       this.hasNext$ = this.store.select(selectHasNext);
+      this.store
+        .select(selectError)
+        .pipe(
+          filter(error => error !== null),
+          take(1)
+        )
+        .subscribe(err => this.errorHandler.handleError(new Error(err)));
     }
   }
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private errorHandler: ErrorHandler) {}
 }
