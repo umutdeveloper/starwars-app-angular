@@ -24,7 +24,7 @@ import { PersonCardActionsComponent } from './person-card-actions/person-card-ac
   styleUrls: ['../card/card.scss', './person-card.component.scss'],
 })
 export class PersonCardComponent {
-  @Input() person!: Person;
+  @Input() person?: Person;
 
   getPersonColor(name: string): string {
     const colors = ['#42A5F5', '#66BB6A', '#EF5350', '#FF7043'];

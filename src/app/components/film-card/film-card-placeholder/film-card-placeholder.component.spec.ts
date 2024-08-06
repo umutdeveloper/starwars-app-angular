@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilmCardPlaceholderComponent } from './film-card-placeholder.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('FilmCardPlaceholderComponent', () => {
   let component: FilmCardPlaceholderComponent;
@@ -8,9 +9,9 @@ describe('FilmCardPlaceholderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilmCardPlaceholderComponent]
-    })
-    .compileComponents();
+      imports: [FilmCardPlaceholderComponent],
+      providers: [provideExperimentalZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FilmCardPlaceholderComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GridColumnComponent } from './grid-column.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('GridColumnComponent', () => {
   let component: GridColumnComponent;
@@ -8,9 +9,9 @@ describe('GridColumnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GridColumnComponent]
-    })
-    .compileComponents();
+      imports: [GridColumnComponent],
+      providers: [provideExperimentalZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GridColumnComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VehicleCardPlaceholderComponent } from './vehicle-card-placeholder.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('VehicleCardPlaceholderComponent', () => {
   let component: VehicleCardPlaceholderComponent;
@@ -8,9 +9,9 @@ describe('VehicleCardPlaceholderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VehicleCardPlaceholderComponent]
-    })
-    .compileComponents();
+      imports: [VehicleCardPlaceholderComponent],
+      providers: [provideExperimentalZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VehicleCardPlaceholderComponent);
     component = fixture.componentInstance;

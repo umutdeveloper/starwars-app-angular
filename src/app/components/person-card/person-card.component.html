@@ -1,4 +1,4 @@
-<mat-card class="person-card">
+<mat-card class="person-card" *ngIf="person">
   <app-card-badge />
   <mat-card-content class="person-card__content">
     <div class="person-card__avatar" [ngStyle]="{ 'background-color': getPersonColor(person.name) }">

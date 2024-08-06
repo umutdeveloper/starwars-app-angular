@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilmCardComponent } from './film-card.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('FilmCardComponent', () => {
   let component: FilmCardComponent;
@@ -8,9 +9,9 @@ describe('FilmCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilmCardComponent]
-    })
-    .compileComponents();
+      imports: [FilmCardComponent],
+      providers: [provideExperimentalZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FilmCardComponent);
     component = fixture.componentInstance;

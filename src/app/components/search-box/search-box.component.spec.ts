@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchBoxComponent } from './search-box.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('SearchBoxComponent', () => {
   let component: SearchBoxComponent;
@@ -8,9 +10,9 @@ describe('SearchBoxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchBoxComponent]
-    })
-    .compileComponents();
+      imports: [SearchBoxComponent],
+      providers: [provideExperimentalZonelessChangeDetection(), provideAnimationsAsync()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SearchBoxComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MobileMenuComponent } from './mobile-menu.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 describe('MobileMenuComponent', () => {
   let component: MobileMenuComponent;
@@ -9,6 +11,7 @@ describe('MobileMenuComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MobileMenuComponent],
+      providers: [provideExperimentalZonelessChangeDetection(), provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MobileMenuComponent);
