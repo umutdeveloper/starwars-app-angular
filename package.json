@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:docker": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCustom && ng build",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "preview": "ng build && gzip-all \"dist/starwars-app-angular/browser/*.{css,js,html}\" && http-server dist/starwars-app-angular/browser --gzip",
