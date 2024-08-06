@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './components/layout/layout/layout.component';
 import { Routes as PageRoutes } from './utils/routes';
+import { LayoutComponent } from './templates/layout/layout/layout.component';
 
 export const routes: Routes = [
   {

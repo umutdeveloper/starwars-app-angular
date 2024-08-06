@@ -1,1 +1,22 @@
-<p>people works!</p>
+<app-swapi-list header="People" [featureDetails]="peopleFeatureDetails">
+    <app-grid placeholder>
+        @for (item of [1,2,3]; track item) {
+            <app-grid-column>
+                <app-person-card-placeholder />
+            </app-grid-column>
+        }
+    </app-grid>
+    <app-grid list>
+        @if (people$ | async; as people) {
+            @for (person of people; track person.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-person-card [person]="person" />
+                    } @placeholder {
+                        <app-person-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

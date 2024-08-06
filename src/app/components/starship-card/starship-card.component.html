@@ -1,0 +1,28 @@
+<mat-card *ngIf="starship">
+  <mat-card-header>
+    <mat-card-title>{{ starship.name }}</mat-card-title>
+    <mat-card-subtitle>Class: {{ starship.starshipClass }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <strong>Model:</strong>
+      {{ starship.model }}
+    </p>
+    <p>
+      <strong>Manufacturer:</strong>
+      {{ starship.manufacturer }}
+    </p>
+    <p *ngIf="starship.costInCredits !== null">
+      <strong>Cost in Credits:</strong>
+      {{ starship.costInCredits }}
+    </p>
+    <p *ngIf="starship.hyperdriveRating !== null">
+      <strong>Hyperdrive Rating:</strong>
+      {{ starship.hyperdriveRating }}
+    </p>
+    <p *ngIf="starship.MGLT !== null">
+      <strong>MGLT:</strong>
+      {{ starship.MGLT }}
+    </p>
+  </mat-card-content>
+</mat-card>

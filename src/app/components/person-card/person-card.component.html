@@ -1,0 +1,20 @@
+<mat-card class="person-card">
+  <app-card-badge />
+  <mat-card-content class="person-card__content">
+    <div class="person-card__avatar" [ngStyle]="{ 'background-color': getPersonColor(person.name) }">
+      {{ person.name[0] }}
+    </div>
+    <div>
+      <h5>{{ person.name }}</h5>
+      <p class="person-card__description">{{ person.birthYear }} - {{ person.gender }}</p>
+    </div>
+    <div class="person-card__chip-container">
+      <mat-chip-set>
+        <mat-chip variant="outlined">Height: {{ person.height }} cm</mat-chip>
+        <mat-chip variant="outlined">Mass: {{ person.mass }} kg</mat-chip>
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+  <mat-divider class="person-card__divider"></mat-divider>
+  <app-person-card-actions [person]="person"></app-person-card-actions>
+</mat-card>

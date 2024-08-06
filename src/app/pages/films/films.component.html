@@ -1,23 +1,22 @@
-<div class="row">
-    @if (films$ | async; as films) {
-        @for (film of films; track film.id) { 
-            <div class="col">
-                @defer (on viewport) {
-                    <app-film [film]="film" />
-                } @placeholder {
-                    <app-film-card-placeholder />
-                }
-            </div>
-        }
-    }
-    @if (isPendingWithNoItems$ | async) {
+<app-swapi-list header="Films" [featureDetails]="filmFeatureDetails">
+    <app-grid placeholder>
         @for (item of [1,2,3]; track item) {
-            <div class="col">
+            <app-grid-column>
                 <app-film-card-placeholder />
-            </div>
+            </app-grid-column>
         }
-    }
-    @if (isNotFound$ | async) {
-        <h5>No Items Found</h5>
-    }
-</div>
+    </app-grid>
+    <app-grid list>
+        @if (films$ | async; as films) {
+            @for (film of films; track film.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-film [film]="film" />
+                    } @placeholder {
+                        <app-film-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

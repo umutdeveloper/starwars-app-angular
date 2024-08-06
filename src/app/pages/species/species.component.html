@@ -1,1 +1,22 @@
-<p>species works!</p>
+<app-swapi-list header="Species" [featureDetails]="speciesFeatureDetails">
+    <app-grid placeholder>
+        @for (item of [1,2,3]; track item) {
+            <app-grid-column>
+                <app-species-card-placeholder />
+            </app-grid-column>
+        }
+    </app-grid>
+    <app-grid list>
+        @if (species$ | async; as species) {
+            @for (speciesItem of species; track speciesItem.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-species-card [species]="speciesItem" />
+                    } @placeholder {
+                        <app-species-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

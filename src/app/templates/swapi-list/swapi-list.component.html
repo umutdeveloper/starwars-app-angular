@@ -1,0 +1,14 @@
+<app-page-header
+  [header]="(pageHeader$ | async)!"
+  [totalPage]="(totalPage$ | async)!"
+  [currentPage]="(pagination$ | async)!.page" />
+<app-search-box [disabled]="(isPending$ | async)!" (onChange)="handleSearchQueryChange($event)" />
+<ng-content *ngIf="isPendingForNoItems$ | async" select="[placeholder]"></ng-content>
+<h5 *ngIf="isNotFound$ | async">No Items Found</h5>
+<ng-content *ngIf="pageResultsLength$ | async" select="[list]"></ng-content>
+<app-pagination
+  *ngIf="(totalPage$ | async)! > 1"
+  [prevDisabled]="!(hasPrev$ | async)! || (isPending$ | async)!"
+  [nextDisabled]="!(hasNext$ | async)! || (isPending$ | async)!"
+  (prevClick)="goPreviousPage()"
+  (nextClick)="goNextPage()" />

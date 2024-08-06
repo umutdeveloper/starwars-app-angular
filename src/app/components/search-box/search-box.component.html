@@ -1,0 +1,7 @@
+<mat-form-field appearance="outline">
+  <mat-label>Search</mat-label>
+  <input matInput [formControl]="searchControl" [disabled]="disabled" autocomplete="off" />
+  <button mat-icon-button *ngIf="searchControl.value" (click)="clearField()">
+    <mat-icon svgIcon="clear" />
+  </button>
+</mat-form-field>

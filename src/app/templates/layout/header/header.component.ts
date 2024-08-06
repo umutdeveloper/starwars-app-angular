@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { DesktopMenuComponent } from '../desktop-menu/desktop-menu.component';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MENU_SVG, ROCKET_SVG } from './icons';
+import MENU_SVG from '../../../icons/menu';
+import ROCKET_SVG from '../../../icons/rocket';
 
 @Component({
   selector: 'app-header',

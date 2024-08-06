@@ -1,1 +1,22 @@
-<p>planets works!</p>
+<app-swapi-list header="Planets" [featureDetails]="planetsFeatureDetails">
+    <app-grid placeholder>
+        @for (item of [1,2,3]; track item) {
+            <app-grid-column>
+                <app-planet-card-placeholder />
+            </app-grid-column>
+        }
+    </app-grid>
+    <app-grid list>
+        @if (planets$ | async; as planets) {
+            @for (planet of planets; track planet.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-planet-card [planet]="planet" />
+                    } @placeholder {
+                        <app-planet-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

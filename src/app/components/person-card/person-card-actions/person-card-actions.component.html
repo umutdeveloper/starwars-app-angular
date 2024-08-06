@@ -1,0 +1,12 @@
+<mat-card-actions class="person-card-actions">
+  <div class="person-card-actions__buttons">
+    <ng-container *ngFor="let button of actionButtons">
+      <ng-container *ngIf="button.length > 0">
+        <button mat-icon-button [ngStyle]="{ 'color': button.color }">
+          <mat-icon [svgIcon]="button.icon"></mat-icon>
+          <span>{{ button.length }}</span>
+        </button>
+      </ng-container>
+    </ng-container>
+  </div>
+</mat-card-actions>

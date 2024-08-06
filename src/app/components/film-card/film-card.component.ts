@@ -9,7 +9,7 @@ import { Film } from '../../features/swapi/models/film';
   standalone: true,
   imports: [CommonModule, MatCardModule, MatProgressSpinnerModule],
   templateUrl: './film-card.component.html',
-  styleUrl: './film-card.component.scss',
+  styleUrls: ['../card/card.scss', './film-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmCardComponent {

@@ -1,0 +1,30 @@
+.person-card-actions {
+  background-color: #ffffff;
+  width: 100%;
+  flex-direction: column;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 52px;
+      height: 52px;
+    }
+
+    span {
+        color: #333333;
+        font-weight: 600;
+        font-size: 14px;
+    }
+  }
+}

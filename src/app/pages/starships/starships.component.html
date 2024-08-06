@@ -1,1 +1,22 @@
-<p>starships works!</p>
+<app-swapi-list header="Starships" [featureDetails]="starshipsFeatureDetails">
+    <app-grid placeholder>
+        @for (item of [1,2,3]; track item) {
+            <app-grid-column>
+                <app-starship-card-placeholder />
+            </app-grid-column>
+        }
+    </app-grid>
+    <app-grid list>
+        @if (starships$ | async; as starships) {
+            @for (starship of starships; track starship.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-starship-card [starship]="starship" />
+                    } @placeholder {
+                        <app-starship-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

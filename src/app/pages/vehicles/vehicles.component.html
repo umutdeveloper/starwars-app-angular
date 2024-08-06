@@ -1,1 +1,22 @@
-<p>vehicles works!</p>
+<app-swapi-list header="Vehicles" [featureDetails]="vehiclesFeatureDetails">
+    <app-grid placeholder>
+        @for (item of [1,2,3]; track item) {
+            <app-grid-column>
+                <app-vehicle-card-placeholder />
+            </app-grid-column>
+        }
+    </app-grid>
+    <app-grid list>
+        @if (vehicles$ | async; as vehicles) {
+            @for (vehicle of vehicles; track vehicle.id) { 
+                <app-grid-column>
+                    @defer (on viewport) {
+                        <app-vehicle-card [vehicle]="vehicle" />
+                    } @placeholder {
+                        <app-vehicle-card-placeholder />
+                    }
+                </app-grid-column>
+            }
+        }
+    </app-grid>
+</app-swapi-list>

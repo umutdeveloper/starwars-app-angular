@@ -1,0 +1,32 @@
+<mat-card *ngIf="species">
+  <mat-card-header>
+    <mat-card-title>{{ species.name }}</mat-card-title>
+    <mat-card-subtitle>Designation: {{ species.designation }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p *ngIf="species.averageHeight !== null">
+      <strong>Average Height:</strong>
+      {{ species.averageHeight }}
+    </p>
+    <p *ngIf="species.averageLifespan !== null">
+      <strong>Average Lifespan:</strong>
+      {{ species.averageLifespan }}
+    </p>
+    <p>
+      <strong>Classification:</strong>
+      {{ species.classification }}
+    </p>
+    <p *ngIf="species.eyeColors.length > 0">
+      <strong>Eye Colors:</strong>
+      {{ species.eyeColors.join(', ') }}
+    </p>
+    <p *ngIf="species.hairColors.length > 0">
+      <strong>Hair Colors:</strong>
+      {{ species.hairColors.join(', ') }}
+    </p>
+    <p *ngIf="species.skinColors.length > 0">
+      <strong>Skin Colors:</strong>
+      {{ species.skinColors.join(', ') }}
+    </p>
+  </mat-card-content>
+</mat-card>

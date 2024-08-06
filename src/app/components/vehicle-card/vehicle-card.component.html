@@ -1,0 +1,24 @@
+<mat-card *ngIf="vehicle">
+  <mat-card-header>
+    <mat-card-title>{{ vehicle.name }}</mat-card-title>
+    <mat-card-subtitle>Class: {{ vehicle.vehicleClass }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <strong>Model:</strong>
+      {{ vehicle.model }}
+    </p>
+    <p>
+      <strong>Manufacturer:</strong>
+      {{ vehicle.manufacturer }}
+    </p>
+    <p *ngIf="vehicle.costInCredits !== null">
+      <strong>Cost in Credits:</strong>
+      {{ vehicle.costInCredits }}
+    </p>
+    <p *ngIf="vehicle.maxAtmospheringSpeed !== null">
+      <strong>Max Atmosphering Speed:</strong>
+      {{ vehicle.maxAtmospheringSpeed }}
+    </p>
+  </mat-card-content>
+</mat-card>

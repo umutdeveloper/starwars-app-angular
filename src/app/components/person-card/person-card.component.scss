@@ -1,0 +1,46 @@
+.person-card {
+  position: relative;
+  background-color: #dddddd;
+  text-align: center;
+}
+
+.person-card__badge path {
+  fill: #ffffff;
+}
+
+.person-card__content {
+  background-color: #fff;
+  margin-top: 68px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 20;
+  position: relative;
+  padding-top: 0;
+}
+
+.person-card__avatar {
+  width: 64px;
+  height: 64px;
+  margin-top: -30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.person-card__description {
+  text-transform: uppercase;
+  color: #666666;
+}
+
+.person-card__chip-container {
+  margin-bottom: 16px !important;
+}
+
+.person-card__divider {
+  border-color: rgba(145, 158, 171, 0.2);
+  background-color: #ffffff;
+}
