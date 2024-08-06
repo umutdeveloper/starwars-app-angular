@@ -11,7 +11,11 @@
             @for (speciesItem of species; track speciesItem.id) { 
                 <app-grid-column>
                     @defer (on viewport) {
-                        <app-species-card [species]="speciesItem" />
+                        @if (isPending$ | async) {
+                            <app-species-card-placeholder />
+                        } @else {
+                            <app-species-card [species]="speciesItem" />
+                        }
                     } @placeholder {
                         <app-species-card-placeholder />
                     }

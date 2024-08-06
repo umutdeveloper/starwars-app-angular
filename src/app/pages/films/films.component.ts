@@ -12,6 +12,8 @@ import { GridComponent } from '../../components/grid/grid.component';
 import { GridColumnComponent } from '../../components/grid/grid-column/grid-column.component';
 
 const selectPageItemResults = createSelector(rootSelector, films.feature.selectPageItemResults);
+const selectStatus = createSelector(rootSelector, films.feature.selectStatus);
+const selectIsPending = createSelector(selectStatus, status => status === 'loading');
 
 @Component({
   selector: 'app-films',
@@ -30,13 +32,15 @@ const selectPageItemResults = createSelector(rootSelector, films.feature.selectP
 })
 export class FilmsComponent implements OnDestroy {
   readonly films$: Observable<Film[]>;
+  readonly isPending$: Observable<boolean>;
   readonly filmFeatureDetails = films;
 
   ngOnDestroy(): void {
-      this.store.dispatch(people.actions.clearRequestList());
+    this.store.dispatch(people.actions.clearRequestList());
   }
 
   constructor(private readonly store: Store) {
     this.films$ = this.store.select(selectPageItemResults);
+    this.isPending$ = this.store.select(selectIsPending);
   }
 }

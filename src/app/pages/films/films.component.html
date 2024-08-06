@@ -10,8 +10,12 @@
         @if (films$ | async; as films) {
             @for (film of films; track film.id) { 
                 <app-grid-column>
-                    @defer (on viewport) {
-                        <app-film [film]="film" />
+                    @defer (on viewport; when !(isPending$ | async)) {
+                        @if (isPending$ | async) {
+                            <app-film-card-placeholder />
+                        } @else {
+                            <app-film [film]="film" />
+                        }
                     } @placeholder {
                         <app-film-card-placeholder />
                     }

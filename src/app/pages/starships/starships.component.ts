@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 import { StarShip } from '../../features/swapi/models/transport';
 
 const selectPageItemResults = createSelector(rootSelector, starships.feature.selectPageItemResults);
+const selectStatus = createSelector(rootSelector, starships.feature.selectStatus);
+const selectIsPending = createSelector(selectStatus, status => status === 'loading');
 
 @Component({
   selector: 'app-starships',
@@ -30,9 +32,11 @@ const selectPageItemResults = createSelector(rootSelector, starships.feature.sel
 })
 export class StarshipsComponent {
   readonly starships$: Observable<StarShip[]>;
+  readonly isPending$: Observable<boolean>;
   readonly starshipsFeatureDetails = starships;
 
   constructor(private readonly store: Store) {
     this.starships$ = this.store.select(selectPageItemResults);
+    this.isPending$ = this.store.select(selectIsPending);
   }
 }

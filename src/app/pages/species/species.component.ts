@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 import { Species } from '../../features/swapi/models/species';
 
 const selectPageItemResults = createSelector(rootSelector, species.feature.selectPageItemResults);
+const selectStatus = createSelector(rootSelector, species.feature.selectStatus);
+const selectIsPending = createSelector(selectStatus, status => status === 'loading');
 
 @Component({
   selector: 'app-species',
@@ -30,9 +32,11 @@ const selectPageItemResults = createSelector(rootSelector, species.feature.selec
 })
 export class SpeciesComponent {
   readonly species$: Observable<Species[]>;
+  readonly isPending$: Observable<boolean>;
   readonly speciesFeatureDetails = species;
 
   constructor(private readonly store: Store) {
     this.species$ = this.store.select(selectPageItemResults);
+    this.isPending$ = this.store.select(selectIsPending);
   }
 }

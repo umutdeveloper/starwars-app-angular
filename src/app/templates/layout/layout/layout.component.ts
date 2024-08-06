@@ -7,6 +7,7 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HeaderComponent } from '../header/header.component';
 import { MobileMenuComponent } from '../mobile-menu/mobile-menu.component';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'app-layout',
@@ -21,6 +22,7 @@ import { MobileMenuComponent } from '../mobile-menu/mobile-menu.component';
     HeaderComponent,
     MobileMenuComponent,
   ],
+  providers: [LayoutService],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

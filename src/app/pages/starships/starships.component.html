@@ -11,7 +11,11 @@
             @for (starship of starships; track starship.id) { 
                 <app-grid-column>
                     @defer (on viewport) {
-                        <app-starship-card [starship]="starship" />
+                        @if (isPending$ | async) {
+                            <app-starship-card-placeholder />
+                        } @else {
+                            <app-starship-card [starship]="starship" />
+                        }
                     } @placeholder {
                         <app-starship-card-placeholder />
                     }

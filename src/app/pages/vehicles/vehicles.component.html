@@ -11,7 +11,11 @@
             @for (vehicle of vehicles; track vehicle.id) { 
                 <app-grid-column>
                     @defer (on viewport) {
-                        <app-vehicle-card [vehicle]="vehicle" />
+                        @if (isPending$ | async) {
+                            <app-vehicle-card-placeholder />
+                        } @else {
+                            <app-vehicle-card [vehicle]="vehicle" />
+                        }
                     } @placeholder {
                         <app-vehicle-card-placeholder />
                     }

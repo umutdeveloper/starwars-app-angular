@@ -12,6 +12,8 @@ import { GridComponent } from '../../components/grid/grid.component';
 import { GridColumnComponent } from '../../components/grid/grid-column/grid-column.component';
 
 const selectPageItemResults = createSelector(rootSelector, planets.feature.selectPageItemResults);
+const selectStatus = createSelector(rootSelector, planets.feature.selectStatus);
+const selectIsPending = createSelector(selectStatus, status => status === 'loading');
 
 @Component({
   selector: 'app-planets',
@@ -30,9 +32,11 @@ const selectPageItemResults = createSelector(rootSelector, planets.feature.selec
 })
 export class PlanetsComponent {
   readonly planets$: Observable<Planet[]>;
+  readonly isPending$: Observable<boolean>;
   readonly planetsFeatureDetails = planets;
 
   constructor(private readonly store: Store) {
     this.planets$ = this.store.select(selectPageItemResults);
+    this.isPending$ = this.store.select(selectIsPending);
   }
 }

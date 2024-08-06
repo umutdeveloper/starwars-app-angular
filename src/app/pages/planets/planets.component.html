@@ -11,7 +11,11 @@
             @for (planet of planets; track planet.id) { 
                 <app-grid-column>
                     @defer (on viewport) {
-                        <app-planet-card [planet]="planet" />
+                        @if (isPending$ | async) {
+                            <app-planet-card-placeholder />
+                        } @else {
+                            <app-planet-card [planet]="planet" />
+                        }
                     } @placeholder {
                         <app-planet-card-placeholder />
                     }

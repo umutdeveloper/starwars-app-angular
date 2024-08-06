@@ -8,6 +8,7 @@ import { Base } from '../../features/swapi/models/base';
 import { createSelector, Store } from '@ngrx/store';
 import { filter, map, Observable, shareReplay, take, tap } from 'rxjs';
 import { rootSelector } from '../../features/swapi/swapi.reducer';
+import { LayoutService } from '../layout/layout.service';
 
 @Component({
   selector: 'app-swapi-list',
@@ -89,7 +90,7 @@ export class SwapiListComponent<T extends Base> implements OnInit {
           if (this.featureDetails) {
             this.store.dispatch(this.featureDetails.actions.fetchList(pagination));
           }
-          window.scrollTo(0, 0);
+          this.layoutService.scrollToTop();
         }),
         shareReplay({ bufferSize: 1, refCount: true })
       );
@@ -111,5 +112,5 @@ export class SwapiListComponent<T extends Base> implements OnInit {
     }
   }
 
-  constructor(private store: Store, private errorHandler: ErrorHandler) {}
+  constructor(private store: Store, private errorHandler: ErrorHandler, private layoutService: LayoutService) {}
 }

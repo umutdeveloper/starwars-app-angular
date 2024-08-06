@@ -12,6 +12,8 @@ import { createSelector, Store } from '@ngrx/store';
 import { rootSelector } from '../../features/swapi/swapi.reducer';
 
 const selectPageItemResults = createSelector(rootSelector, people.feature.selectPageItemResults);
+const selectStatus = createSelector(rootSelector, people.feature.selectStatus);
+const selectIsPending = createSelector(selectStatus, status => status === 'loading');
 
 @Component({
   selector: 'app-people',
@@ -30,9 +32,11 @@ const selectPageItemResults = createSelector(rootSelector, people.feature.select
 })
 export class PeopleComponent {
   readonly people$: Observable<Person[]>;
+  readonly isPending$: Observable<boolean>;
   readonly peopleFeatureDetails = people;
 
   constructor(private readonly store: Store) {
     this.people$ = this.store.select(selectPageItemResults);
+    this.isPending$ = this.store.select(selectIsPending);
   }
 }

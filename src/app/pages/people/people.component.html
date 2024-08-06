@@ -11,7 +11,11 @@
             @for (person of people; track person.id) { 
                 <app-grid-column>
                     @defer (on viewport) {
-                        <app-person-card [person]="person" />
+                        @if (isPending$ | async) {
+                            <app-person-card-placeholder />
+                        } @else {
+                            <app-person-card [person]="person" />
+                        }
                     } @placeholder {
                         <app-person-card-placeholder />
                     }
