@@ -8,6 +8,8 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { createFeatureFor } from '../../features/swapi/swapi.state.base';
 import { mapToFilm } from '../../features/swapi/mappers/film.mapper';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LayoutService } from '../layout/layout.service';
+import { provideMockElementRef } from '../../../../tests/mock-element-ref';
 
 describe('SwapiListComponent', () => {
   let component: SwapiListComponent<Film>;
@@ -41,6 +43,8 @@ describe('SwapiListComponent', () => {
         provideExperimentalZonelessChangeDetection(),
         provideMockStore({ initialState }),
         provideAnimationsAsync(),
+        LayoutService,
+        provideMockElementRef(),
       ],
     }).compileComponents();
 

@@ -5,6 +5,8 @@ import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { SwapiStore } from '../../features/swapi/swapi.reducer';
 import { provideMockStore } from '@ngrx/store/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LayoutService } from '../../templates/layout/layout.service';
+import { provideMockElementRef } from '../../../../tests/mock-element-ref';
 
 describe('VehiclesComponent', () => {
   let component: VehiclesComponent;
@@ -38,6 +40,8 @@ describe('VehiclesComponent', () => {
         provideExperimentalZonelessChangeDetection(),
         provideMockStore({ initialState }),
         provideAnimationsAsync(),
+        LayoutService,
+        provideMockElementRef(),
       ],
     }).compileComponents();
 
