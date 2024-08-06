@@ -17,15 +17,7 @@ import CLEAR_SVG from '../../icons/clear';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBoxComponent implements OnDestroy {
-  private _disabled: boolean = false;
-  @Input() set disabled(value: boolean) {
-    this._disabled = value;
-    if (this._disabled) {
-      this.searchControl.disable({ emitEvent: false });
-    } else {
-      this.searchControl.enable({ emitEvent: false });
-    }
-  }
+  @Input() disabled: boolean = false;
   @Output() onChange = new EventEmitter<string>();
 
   searchControl = new FormControl('');
@@ -42,7 +34,7 @@ export class SearchBoxComponent implements OnDestroy {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIconLiteral('clear', sanitizer.bypassSecurityTrustHtml(CLEAR_SVG));
     this.searchControlSub = this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(value => {
-      if (!this._disabled) {
+      if (!this.disabled) {
         this.onChange.emit(value || '');
       }
     });
